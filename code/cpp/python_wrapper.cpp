@@ -11,6 +11,7 @@ PYBIND11_MODULE(pysnax, m)
   try { pybind11::module_::import("numpy"); } catch (...) { return; }
 
   m.def("module_info", &module_info, "Basic information about the module.");
+  m.attr("constants") = constants_dict;
   m.def("beta", &beta, "Beta function in special relativity.", "m"_a, "ea"_a);
   m.def("gamma", &py_gamma, "Gamma function in special relativity.", "m"_a, "ea"_a);
   m.def("tau", &tau, "ALP rest-frame lifetime (in eV^-1).", "m"_a, "g"_a);

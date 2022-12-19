@@ -2,7 +2,7 @@
 
 This is a code for calculating the axion-like particle (ALP) signals from supernovae (SNe). It can currently compute the likelihood for ALP conversions in the Galactic magnetic field and ALP after SN 1987A.
 
-Monte Carlo (MC) routines for ALP decays written by Marie Lecroq, Sebastian Hoof, and Csaba Balazs. Please cite refs [[1,2]](#cosmoalp) when using these.
+Monte Carlo (MC) routines for ALP decays written by Marie Lecroq, Sebastian Hoof, and Csaba Bal&aacute;zs. Please cite refs [[1,2]](#cosmoalp) when using these.
 All other methods written by Lena Schulz and Sebastian Hoof. Please cite ref. [[2]](#update) when using these.
 
 ## Summary
@@ -19,7 +19,8 @@ In ref. [[2]](#update), we digitise data from refs [[3,4]](#data1) to update the
   <img width="800" height="340" src="results/sn1987a_alp_limits_web.png">
 </p>
 
-The figures above shows the 95% exclusion limit on the ALP-photon coupling obtained from using our updated likelihood in ref. [[2]](#update).
+Limits on the ALP-photon coupling (at 95% CL) obtained from using our updated likelihood in ref. [[2]](#update).
+The left panel shows the limit from ALP conversions in the Galactic magnetic field, while the right panel shows the limit arising from ALP decays.
 
 ## The code
 
@@ -43,7 +44,7 @@ There are a few Python scripts in the [examples folder](examples/) to illustrate
 
 Please cite refs [[1,2]](#cosmoalp), and the appropriate/relevant other works therein when using our code. Do not hesitate to ask us when unsure about this.
 
-<a id="cosmoalp">[1]</a> C. Bal&aacute;zs, S. Bloor, T. E. Gonzalo, *et al*. [&ldquo;*Cosmological constraints on decaying axion-like particles: a global analysis,*&rdquo;](https://arxiv.org/abs/2205.13549) accepted in JCAP, [[arXiv:2205.13549]](https://arxiv.org/abs/2205.13549).
+<a id="cosmoalp">[1]</a> C. Bal&aacute;zs, S. Bloor, T. E. Gonzalo, *et al*. [&ldquo;*Cosmological constraints on decaying axion-like particles: a global analysis,*&rdquo;](https://doi.org/10.1088/1475-7516/2022/12/027) JCAP 12 (2022) 027, [[arXiv:2205.13549]](https://arxiv.org/abs/2205.13549).
 
 <a id="update">[2]</a> S. Hoof and L. Schulz, &ldquo;*Updated constraints on axion-like particles from temporal information in
 supernova SN1987A gamma-ray data,*&rdquo; TBA

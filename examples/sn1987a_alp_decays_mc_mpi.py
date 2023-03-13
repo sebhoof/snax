@@ -64,11 +64,8 @@ def improved_expected_photon_fluence_from_mc(m, g, ebin, tbin):
     # Generate random numbers from [0,1] and transform to random energies via the inverse CDF.
     rng_ergs = rd.random_sample(number_alps)
     rng_ergs = inv_cdf(rng_ergs)
-    #plt.hist(rng_ergs)
-    #plt.show()
-    # Consider only energies where an ALP of mass can be produced (should be true for all).
+    # Consider only energies where an ALP of mass can be produced (for massless ALP approx. above).
     rng_ergs = rng_ergs[rng_ergs > m]
-    assert len(rng_ergs) == number_alps
     afrac = sn.acceptance_fraction(rng_ergs, ebin, tbin, m, g)
     res = naive_one_photon_fluence * afrac[0]
 

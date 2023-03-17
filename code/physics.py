@@ -12,24 +12,24 @@ sys.path.append(os.path.abspath(script_dir))
 import pysnax as sn
 
 """
-Physical constants
+Physical constants as used in the C++ code
 """
 
-alpha = 1.0 / 137.035999084  # Fine structure constant
-c = 3.0e8  # Speed of light (in m/s)
+alpha = sn.constants['alpha']  # Fine structure constant (= 1/137.035999084)
+c = sn.constants['c']  # Speed of light (in m/s)
 
 """
 Supernova 1987a constants
 """
 
-d = 51.4 * 3.08567758149137e19  # Distance from Earth to SN1987A (in m)
-distance_factor = 1.0e-4 / (4.0 * np.pi * d * d)
+d = sn.constants['d']  # Distance from Earth to SN1987A (in m)
+distance_factor = sn.constants['distance_factor']
 d_in_s = d/c
-r_env = 3.0e10  # SN1987a envelope below which photons are not released (in m)
+r_env = sn.constants['renv']  # SN1987a envelope below which photons are not released (in m)
 r_env_in_s = r_env/c
-ks = 16.8e6  # Effective Debye screening scale (in eV)
-spectral_norm = 2.54e71  # Normalisation constant for the spectrum (in eV^-1)
-t_eff = 30.6e6  # Effective temperature (in eV)
+ks = np.sqrt(sn.constants['ks2_jaeckel17'])  # Effective Debye screening scale (in eV)
+spectral_norm = sn.constants['snorm_jaeckel17']  # Normalisation constant for the spectrum (in eV^-1)
+t_eff = sn.constants['t_eff_jaeckel17']  # Effective temperature (in eV)
 
 """
 Experimental parameters

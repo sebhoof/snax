@@ -20,7 +20,7 @@ In ref. [[2]](#update), we digitise data from refs [[3,4]](#data1) to update the
 </p>
 
 Limits on the ALP-photon coupling (at 95% CL) obtained from using our updated likelihood in ref. [[2]](#update).
-The left panel shows the limit from ALP conversions in the Galactic magnetic field, while the right panel shows the limit arising from ALP decays.
+The left panel shows the limit from ALP conversions in the Galactic magnetic field while the right panel shows the limit arising from ALP decays.
 
 ## The code
 

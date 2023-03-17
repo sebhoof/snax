@@ -7,7 +7,9 @@
 double calc_ea_min(double m, double ep);
 double calc_ea_max_weak(double m, double ep, double tp0, double tem=0);
 
+double ta_geometry(double ea, double ep, double m);
 double ta_from_t(double t, double ea, double ep, double m);
+
 double inner_integrand_approx(double ea, double ep, double tp1, double m, double g, double ks2=ks2_jaeckel17, double snorm=snorm_jaeckel17, double t_eff=t_eff_jaeckel17);
 double inner_integrand(double ea, double ep, double tp0, double tp1, double m, double g, double ks2=ks2_jaeckel17, double snorm=snorm_jaeckel17, double t_eff=t_eff_jaeckel17);
 double inner_integrand_with_tem(double ea, double tem, double ep, double tp0, double tp1, double m, double g, double norm, double e0, double p, double ks2=ks2_jaeckel17);

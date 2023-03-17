@@ -21,4 +21,14 @@ pybind11::dict constants_dict(
                               "ks2_payez15"_a=ks2_payez15, "t_eff_payez15"_a=t_eff_payez15, "snorm_payez15"_a=snorm_payez15,
                               "ks2_jaeckel17"_a=ks2_jaeckel17, "t_eff_jaeckel17"_a=t_eff_jaeckel17, "snorm_jaeckel17"_a=snorm_jaeckel17
                              );
+
+std::unordered_map<std::string, double> constants_umap {
+   { "alpha", alpha }, { "hbar", hbar }, { "c", c0 }, { "hbarc", hbarc }, { "pc", pc },
+   { "d", d }, { "distance_factor", distance_factor }, { "renv", r_env },
+   { "ks2_payez15", ks2_payez15 }, { "t_eff_payez15", t_eff_payez15 }, { "snorm_payez15", snorm_payez15 },
+   { "ks2_jaeckel17", ks2_jaeckel17 }, { "t_eff_jaeckel17", t_eff_jaeckel17 }, { "snorm_jaeckel17", snorm_jaeckel17 }
+};
+
+double get_umap_constant(std::string name);
+
 #endif // defined __python_wrapper_hpp__

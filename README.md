@@ -28,7 +28,8 @@ The code implements an optimised quadrature-based computation of the ALP convers
 
 The code was developed for Python v3.9+ and C++-20-compliant compilers.
 
-There are a few Python scripts in the [examples folder](examples/) to illustrate how to use the calculation routines.
+Python cripts similar to those used when preparing the paper can be found in the [scripts/ folder](scripts/).
+They require a working MPI environment via the `mpi4py` package.
 
 ## Installation
 
@@ -36,7 +37,7 @@ There are a few Python scripts in the [examples folder](examples/) to illustrate
 
 * For Mac OS: use e.g. [Homebrew](https://brew.sh) to install CMAKE via `brew install cmake`.
 
-* Run `python -m pip install numpy scipy gammaALPs vegas` to make sure all required Python packages are installed.
+* Run `python -m pip install numpy scipy mpi4py gammaALPs vegas` to make sure all required Python packages are installed.
 
 * Type `cmake ..` and then `make` to build everything. The C++ library and Python module `pysnax` should appear when running `ls ../code`.
 
@@ -46,8 +47,7 @@ Please cite refs [[1,2]](#cosmoalp), and the appropriate/relevant other works th
 
 <a id="cosmoalp">[1]</a> C. Bal&aacute;zs, S. Bloor, T. E. Gonzalo, *et al*. [&ldquo;*Cosmological constraints on decaying axion-like particles: a global analysis,*&rdquo;](https://doi.org/10.1088/1475-7516/2022/12/027) JCAP 12 (2022) 027, [[arXiv:2205.13549]](https://arxiv.org/abs/2205.13549).
 
-<a id="update">[2]</a> S. Hoof and L. Schulz, &ldquo;*Updated constraints on axion-like particles from temporal information in
-supernova SN1987A gamma-ray data,*&rdquo; TBA
+<a id="update">[2]</a> S. Hoof and L. Schulz, &ldquo;*Updated constraints on axion-like particles from temporal information in supernova SN1987A gamma-ray data,*&rdquo; accepted in JCAP (2023).
 
 <a id="data1">[3]</a> E. L. Chupp, W. T. Vestrand, and C. Reppin. [&ldquo;*Experimental Limits on the Radiative Decay of SN 1987A Neutrinos,*&rdquo;](https://doi.org/10.1103/PhysRevLett.62.505) Phys. Rev. Lett. **62**, 505 (1989).
 

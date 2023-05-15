@@ -13,6 +13,7 @@ lib/libaxionflux.s*
 *.dylib
 
 # Directories
+.vscode
 bin
 build
-code/external/pybind11
+code/external

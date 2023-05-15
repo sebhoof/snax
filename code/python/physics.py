@@ -14,8 +14,6 @@ import pysnax as sn
 """
 Physical constants as used in the C++ code
 """
-
-alpha = sn.constants['alpha']  # Fine structure constant (= 1/137.035999084)
 c = sn.constants['c']  # Speed of light (in m/s)
 
 """
@@ -44,61 +42,16 @@ erg_window_hi = 100.0e6
 Auxiliary functions
 """
 
-# Beta factor in special relativity
-def betafactor(m, ea):
-    return np.sqrt(1.0 - m * m / (ea * ea))
-
-def gammafactor(m, ea):
-    return ea/m
-
-
 # ALP decay length (in m) [Eq. (3) in arXiv:1702.02964]
 def l_ALP(m, g, ea):
     x = 1.0e7 / m
     x2 = x * x
     y = 1.0e-19 / g
-    return 4.0e13 * betafactor(m, ea) * (ea / 1.0e8) * (x2 * x2) * (y * y)
+    return 4.0e13 * sn.beta(m, ea) * (ea / 1.0e8) * (x2 * x2) * (y * y)
 
-# ALP frame lifetime (in eV^-1)
-def tau_alp(m, g):
-    x = m*g
-    return 64.0*np.pi/(m*x*x)
-
-# Mass-dependent cross section (in eV^-2) [Eq. (9) in arXiv:1702.02964]
-def sigma(m, g, ea):
-    if (ea <= m):
-        return 0
-    prefactor = 0.125 * alpha * g * g
-    if (m < 1.0e5):
-        x = 0.25 * ks * ks / (ea * ea)
-        res = (1.0 + x) * np.log1p(1.0 / x) - 1.0
-    else:
-        e2 = ea * ea
-        m2 = m * m
-        m4 = m2 * m2
-        k2 = ks * ks
-        bf = betafactor(m, ea)
-        yp = 2.0 * e2 * (1.0 + bf) - m2
-        ym = 2.0 * e2 * (1.0 - bf) - m2
-        res = (1.0 + 0.25 * k2 / e2 - 0.5 * m2 / e2) * np.log((yp + k2) / (ym + k2)) - bf
-
-        denom = m4 + k2 * ym
-        if (denom > 0):
-            num = m4 + k2 * yp
-            res -= (0.25 * m4 / (k2 * e2)) * np.log(num / denom)
-    return prefactor * res
-
-v_sigma = np.vectorize(sigma)
-
-# Energy spectrum of the ALPs (in eV^-1) [Eq. (7) in arXiv:1702.02964]
+# ALP energy spectrum (in eV^-1) [Eq. (7) in arXiv:1702.02964]
 def spectrum(m, g, ea):
-    #return spectral_norm * ea * ea * sigma(m, g, ea) / np.expm1(ea / T)
-    #return spectral_norm * ea * T * sigma(m, g, ea) / exprel(ea/T)
-    return spectral_norm * ea * t_eff * sigma(m, g, ea) / exprel(ea/t_eff)
-
-def spectrum0(m, g, ea):
-    return spectral_norm * ea * t_eff / exprel(ea/t_eff)
-
+    return spectral_norm * ea * t_eff * sn.sigma(m, g, ea) / exprel(ea/t_eff)
 
 def find_ea_peak(m):
    res = minimize_scalar(lambda e: -sn.spectrum(m, 1e-18, e), bracket=(m, max(2*m, 2*t_eff), max(10*m, 100*t_eff)))
@@ -109,14 +62,13 @@ def axion_fluence(m, g):
     pts0 = np.array([0.1, 1, 100])*ea_peak
     max_erg = max(100*ea_peak, 100*m)
     if (m < 1e4):
-        res = quad(lambda e: spectral_norm*e*e*sn.sigma0(g, e)/np.expm1(e/t_eff), m, max_erg, points=pts0)[0]
+        res = quad(lambda e: spectral_norm*e*e*sn.sigma(0, g, e)/np.expm1(e/t_eff), m, max_erg, points=pts0)[0]
     else:
         res = quad(lambda e: sn.spectrum(m, g, e), m, max_erg, points=pts0)[0]
     return distance_factor * res
 
 
-# ALP emission spectrum from Payez et al. '15 [arXiv:1410.3747]
-# Data from Table 1
+# ALP emission spectrum data from Table 1, Payez et al. '15 [arXiv:1410.3747]
 payez_data = np.array([
 [5.000e-03, 6.240e-02, 3.520e+01, 2.250e+00],
 [2.000e-01, 3.940e-01, 7.730e+01, 2.020e+00],
@@ -146,8 +98,12 @@ payez_c = interp1d(payez_data[:,0], 1e46*payez_data[:,1], kind='cubic', bounds_e
 payez_e0 = interp1d(payez_data[:,0], 1e6*payez_data[:,2], kind='cubic', bounds_error=False, fill_value='extrapolate')
 payez_beta = interp1d(payez_data[:,0], payez_data[:,3], kind='cubic', bounds_error=False, fill_value='extrapolate')
 
-def spectrum_payez(ea, ta, g=1e-19):
+def spectrum_payez(m, g, ea, ta):
     x = g/1e-19
     y = ea/payez_e0(ta)
     b = payez_beta(ta)
-    return distance_factor * x*x * payez_c(ta) * pow(y, b) * np.exp(-(b+1.0)*y)
+    res = x*x * payez_c(ta) * pow(y, b) * np.exp(-(b+1.0)*y)
+    if m > 1e4:
+        ks2 = sn.constants['ks2_payez15']
+        res *= sn.sigma(m, g, ea, ks2)/sn.sigma(0, g, ea, ks2)
+    return res

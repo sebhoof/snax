@@ -23,7 +23,7 @@ const double ks2_jaeckel17 = ks_jaeckel17*ks_jaeckel17;
 const double t_eff_jaeckel17 = 30.6e6; // Effective SN1987A temperature (in eV)
 const double snorm_jaeckel17 = 2.54e71; // Normalisation constant for the spectrum (in eV^-1)
 
-double sigma0(double g, double ea, double ks2=ks2_jaeckel17);
+// ALP-photon corss section.
 double sigma(double m, double g, double ea, double ks2=ks2_jaeckel17);
 
 double spectrum0(double g, double ea, double ks2=ks2_jaeckel17, double snorm=snorm_jaeckel17, double t_eff=t_eff_jaeckel17);

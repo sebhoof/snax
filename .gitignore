@@ -1,0 +1,18 @@
+#MacOS files
+.DS_Store
+
+# Compiled Object files
+*.o
+
+# Python
+__pycache__
+
+# Compiled Dynamic libraries
+lib/libaxionflux.s*
+*.so
+*.dylib
+
+# Directories
+bin
+build
+code/external/pybind11

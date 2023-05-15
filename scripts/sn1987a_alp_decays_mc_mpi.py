@@ -22,7 +22,7 @@ teff = cnst["t_eff_jaeckel17"]
 
 # Number of particles of fixed m and g in the simulation
 # N.B.: according to arXiv:1702.02964, results are stable for number_alps > 1e7
-number_alps = int(1e8)
+number_alps = int(1e3)
 
 # Axion fluence from SN1987A (= naive fluence for one photon per axion) in (cm^-2)
 def axion_fluence(m, g):
@@ -73,7 +73,7 @@ def improved_expected_photon_fluence_from_mc(m, g, ebin, tbin):
 
 ebins0 = [[25e6, 100e6]]
 tbins0 = [0, 223] # Can only have length 2 for MC routines!
-lggvals0 = np.linspace(-22.05, -12, 51)
-lgmvals0 = np.linspace(1, 9, 51)
+lggvals0 = np.linspace(-22.05, -12, 201)
+lgmvals0 = np.linspace(1, 9, 201)
 
 run_mpi_job(improved_expected_photon_fluence_from_mc, script_path+"/../results/sn1987a_alp_decays_mc", ebins0, tbins0, lgmvals0, lggvals0, save_temp_results=True, save_timing_info=False)

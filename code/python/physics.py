@@ -1,33 +1,35 @@
-import sys, os
+import os
+import sys
+script_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.append(os.path.abspath(script_dir+"/../lib/"))
+
 import numpy as np
+import pysnax as sn
 
 from scipy.special import exprel
 from scipy.interpolate import interp1d
 from scipy.integrate import quad
 from scipy.optimize import minimize_scalar
 
-script_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(os.path.abspath(script_dir))
-
-import pysnax as sn
+cnst = sn.constants
 
 """
 Physical constants as used in the C++ code
 """
-c = sn.constants['c']  # Speed of light (in m/s)
+c = cnst['c']  # Speed of light (in m/s)
 
 """
 Supernova 1987a constants
 """
 
-d = sn.constants['d']  # Distance from Earth to SN1987A (in m)
-distance_factor = sn.constants['distance_factor']
+d = cnst['d']  # Distance from Earth to SN1987A (in m)
+distance_factor = cnst['distance_factor']
 d_in_s = d/c
-r_env = sn.constants['renv']  # SN1987a envelope below which photons are not released (in m)
+r_env = cnst['renv']  # SN1987a envelope below which photons are not released (in m)
 r_env_in_s = r_env/c
-ks = np.sqrt(sn.constants['ks2_jaeckel17'])  # Effective Debye screening scale (in eV)
-spectral_norm = sn.constants['snorm_jaeckel17']  # Normalisation constant for the spectrum (in eV^-1)
-t_eff = sn.constants['t_eff_jaeckel17']  # Effective temperature (in eV)
+ks = np.sqrt(cnst['ks2_jaeckel17'])  # Effective Debye screening scale (in eV)
+spectral_norm = cnst['snorm_jaeckel17']  # Normalisation constant for the spectrum (in eV^-1)
+t_eff = cnst['t_eff_jaeckel17']  # Effective temperature (in eV)
 
 """
 Experimental parameters
@@ -65,6 +67,19 @@ def axion_fluence(m, g):
         res = quad(lambda e: spectral_norm*e*e*sn.sigma(0, g, e)/np.expm1(e/t_eff), m, max_erg, points=pts0)[0]
     else:
         res = quad(lambda e: sn.spectrum(m, g, e), m, max_erg, points=pts0)[0]
+    return distance_factor * res
+
+# Improved version of MC routines still available at https://github.com/marie-lecroq/ALP-fluence-calculation
+
+# Number of particles of fixed m and g in the simulation
+# N.B. Results sould be stable for number_alps > 1e7 (arXiv:1702.02964)
+# Check the error of 'afrac' if necessary
+number_alps = int(1e5)
+
+# 'Naive' ALP fluence from SN1987A in (cm^-2)
+def axion_fluence_sn1987a(m, g):
+    max_erg = max(250*t_eff, 100*m)
+    res = quad(lambda e: sn.spectrum(m, g, e), m, max_erg)[0]
     return distance_factor * res
 
 

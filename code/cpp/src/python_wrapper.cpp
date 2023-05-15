@@ -10,8 +10,14 @@ PYBIND11_MODULE(pysnax, m)
 
   try { pybind11::module_::import("numpy"); } catch (...) { return; }
 
-  m.def("module_info", &module_info, "Basic information about the module.");
+  const pybind11::dict constants_dict (
+    "alpha"_a=alpha, "hbar"_a=hbar, "c"_a=c0, "hbarc"_a=hbarc, "pc"_a=pc, "d"_a=d, "distance_factor"_a=distance_factor,
+    "renv"_a=r_env, "ks2_payez15"_a=ks2_payez15, "t_eff_payez15"_a=t_eff_payez15, "snorm_payez15"_a=snorm_payez15,
+    "ks2_jaeckel17"_a=ks2_jaeckel17, "t_eff_jaeckel17"_a=t_eff_jaeckel17, "snorm_jaeckel17"_a=snorm_jaeckel17
+  );
+
   m.attr("constants") = constants_dict;
+  m.def("module_info", &module_info, "Basic information about the module.");
   m.def("get_constant", &get_umap_constant, "Return a constant used inside the module.", "name"_a);
   m.def("beta", &beta, "Beta function in special relativity.", "m"_a, "ea"_a);
   m.def("gamma", &py_gamma, "Gamma function in special relativity.", "m"_a, "ea"_a);
@@ -37,7 +43,4 @@ void module_info()
   std::cout << "This is the SNAx library v2.0, calculating the gamma-ray signal predictions from ALPs after SN1987A since 2022!" << std::endl;
 }
 
-double get_umap_constant(std::string name)
-{
-  return constants_umap.at(name);
-}
+double get_umap_constant(std::string name) { return constants_umap.at(name); }

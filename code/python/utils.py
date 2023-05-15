@@ -5,11 +5,11 @@ import numpy as np
 from datetime import date
 
 
-def task_wrapper(task, id, pairs, ebins, tbins):
+def task_wrapper(task, id, pairs, ebins, tbins, **kwargs):
     ie, lgm, lgg = pairs[id]
     ebin = ebins[int(ie)]
     t0 = time.time()
-    res = task(10**lgm, 10**lgg, ebin, tbins)
+    res = task(10**lgm, 10**lgg, ebin, tbins, **kwargs)
     t1 = time.time()
     dt = (t1-t0)/60.0
     res = np.array(list(ebin) + [lgm, lgg] + res + [dt])
@@ -17,7 +17,7 @@ def task_wrapper(task, id, pairs, ebins, tbins):
 
 start_time = time.time()
 
-def run_mpi_job(task, out_file_name_root, ebins, tbins, lgmvals, lggvals, save_temp_results=True, save_timing_info=True):
+def run_mpi_job(task, out_file_name_root, ebins, tbins, lgmvals, lggvals, save_temp_results=True, save_timing_info=True, **kwargs):
     # Set up the MPI environment and variables.
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
@@ -30,14 +30,14 @@ def run_mpi_job(task, out_file_name_root, ebins, tbins, lgmvals, lggvals, save_t
     
     if (rank > 0):
         # Send first result to main process to signal that this proc is ready for more tasks
-        res, dt = task_wrapper(task, rank-1, pairs, ebins, tbins)
+        res, dt = task_wrapper(task, rank-1, pairs, ebins, tbins, **kwargs)
         print('Initial job finished on rank {}, took {:.2} mins.'.format(rank, dt), flush=True)
         comm.Send(res, dest=0)
-        for i in range(ntasks):
+        for _ in range(ntasks):
             task_id = comm.recv(source=0)
             if (task_id > ntasks):
                 break
-            res, dt = task_wrapper(task, task_id-1, pairs, ebins, tbins)
+            res, dt = task_wrapper(task, task_id-1, pairs, ebins, tbins, **kwargs)
             comm.Send(res, dest=0)
         dt = (time.time()-start_time)/3600.0
         print('MPI rank {} finished! MC simulations took {:.3f} hrs.'.format(rank, dt))
@@ -47,7 +47,6 @@ def run_mpi_job(task, out_file_name_root, ebins, tbins, lgmvals, lggvals, save_t
         all_results = []
         out_file_name = out_file_name_root+".dat"
         out_file_temp_name = out_file_name_root+"_temp.dat"
-        n_info = 1
         buffer_size = 4+ntbins+1
         n_temp_save = int(ntasks//20 + 1) # Save after ~5% progress for many tasks (otherwise every task)
         print('Main process waiting for {} results from {} other processes...'.format(ntasks, ncores-1), flush=True)

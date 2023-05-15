@@ -1,10 +1,7 @@
-import os, sys
 import numpy as np
 
 from scipy.stats import poisson
 from scipy.optimize import minimize
-
-script_dir = os.path.dirname(os.path.realpath(__file__))
 
 a_eff = [28, 115, 63] # cm^2
 

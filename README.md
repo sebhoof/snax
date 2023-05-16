@@ -32,7 +32,7 @@ The left panel displays the limit from ALP conversions in the Galactic magnetic 
 The code implements optimized quadrature-based computation for ALP conversion (requires the `gammaALPs` package) and decays, as well as an older brute-force and improved Monte Carlo integration for ALP decays.
 The code is developed for Python v3.9+ and C++-20-compliant compilers.
 
-An simple example for how to use the code is included in the (snax_demo.ipynb)[snax_demo.ipynb] Jupyter notebook.
+An simple example for how to use the code is included in the [snax_demo.ipynb](snax_demo.ipynb) Jupyter notebook.
 Python scripts similar to those used in the paper are available in the [code/python/mpi_scripts/](code/python/mpi_scripts/) folder (require a correctly installed `mpi4py` package).
 
 
@@ -44,7 +44,7 @@ Python scripts similar to those used in the paper are available in the [code/pyt
 
 3. For macOS, install CMAKE using [Homebrew](https://brew.sh): `brew install cmake`.
 
-4. Run `cmake ..` and then `make` to build everything. You should see the C++ library and Python module `pysnax` when running `ls ../code`.
+4. Run `cmake ..` and then `make` to build everything. The C++ library and Python module `pysnax` should be generated in the newly created `code/lib` directory.
 
 5. Ensure all required Python packages are installed: `python -m pip install numpy scipy mpi4py gammaALPs vegas`.
 

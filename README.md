@@ -48,48 +48,9 @@ Python scripts similar to those used in the paper are available in the [code/pyt
 
 5. Ensure all required Python packages are installed: `python -m pip install numpy scipy mpi4py gammaALPs vegas`.
 
-
 ## References
 
-Certainly! Here's the Markdown source code for the improved README.md:
-
-markdown
-
-# SNax - Supernovae and Axion-like Particle Signatures
-
-SNax is a code that calculates the signals of axion-like particles (ALPs) from supernovae (SNe). It provides likelihood computations for ALP conversions in the Galactic magnetic field and ALP signals after SN 1987A.
-
-## Summary
-
-Axion-like particles are produced in SNe and can decay into two photons or convert into photons while traveling through magnetic fields towards Earth. By observing the absence of such photons from the direction of SN 1987A, we can establish limits on the ALP-photon coupling.
-
-This code includes Monte Carlo (MC) routines for predicting the number of ALP decay photons, as described in ref. [[1]](#cosmoalp). Additionally, in ref. [[2]](#update), we update the ALP-photon limits by digitizing data from refs [[3,4]](#data1) and developing new integration routines for ALP conversions and decays.
-
-## Results
-
-![ALP-photon limits](results/sn1987a_alp_limits_web.png)
-
-The figure above shows the limits on the ALP-photon coupling (at 95% CL) obtained using our updated likelihood from ref. [[2]](#update). The left panel displays the limit from ALP conversions in the Galactic magnetic field, while the right panel shows the limit from ALP decays.
-
-## The Code
-
-The code implements optimized quadrature-based computation for ALP conversion (requires the `gammaALPs` package) and decays, as well as an older brute-force and improved Monte Carlo integration for ALP decays. The code is developed for Python v3.9+ and C++-20-compliant compilers.
-
-Python scripts similar to those used in the paper are available in the [scripts/ folder](scripts/). They require a working MPI environment using the `mpi4py` package.
-
-## Installation
-
-To install the code:
-
-1. Clone this repository: `git clone https://github.com/sebhoof/snax`.
-2. Set up a build directory: `cd snax; mkdir build; cd build/`.
-3. For macOS, install CMAKE using [Homebrew](https://brew.sh): `brew install cmake`.
-4. Ensure all required Python packages are installed: `python -m pip install numpy scipy mpi4py gammaALPs vegas`.
-5. Run `cmake ..` and then `make` to build everything. You should see the C++ library and Python module `pysnax` when running `ls ../code`.
-
-## References
-
-If you use our code, please cite refs [[1,2](#cosmoalp).
+If you use our code, please cite refs [[1,2]](#cosmoalp).
 
 <a id="update">[1]</a> S. Hoof and L. Schulz, [&ldquo;*Updated constraints on axion-like particles from temporal information in supernova SN1987A gamma-ray data,*&rdquo;](https://doi.org/10.1088/1475-7516/2023/03/054) JCAP 03 (2023) 054 [[arXiv:2212.09764]](https://arxiv.org/abs/2212.09764).
 
